@@ -1,0 +1,21 @@
+name: authenticator
+description: package to control authentication process of app using BLoC
+version: 0.0.1
+author: Kanan Yusubov
+homepage:
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.17.0 <2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^6.0.3 
+  equatable: ^1.2.4 
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
