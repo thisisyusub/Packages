@@ -69,6 +69,8 @@ class LangKeysGenerator implements Builder {
         }
       }
 
+      print('current value: ${sb.toString()}');
+
       /// write all data to [langauge_keys.dart] file in [utils/constants] directory
       var writingFile = File(output);
       var writer = writingFile.openWrite();
