@@ -5,6 +5,8 @@ import 'dart:io';
 
 import 'package:build/build.dart';
 
+/// simple extension for String
+/// to capitalize Strings like [CamelCase]
 extension on String {
   String get capitalize {
     final splitParts = split('_');
@@ -16,7 +18,11 @@ extension on String {
   }
 }
 
+/// generates strings according to json files
+/// pick keys of json files and write to new file
+/// !!![it will not take into account you have omitted some key or not]
 class LangKeysGenerator implements Builder {
+  /// extensions for [build] package
   @override
   Map<String, List<String>> get buildExtensions => {
         '.json': ['lang_keys.dart']
@@ -31,6 +37,8 @@ class LangKeysGenerator implements Builder {
   /// to perform fast String concatenation
   final sb = StringBuffer();
 
+  /// main business logic of generator
+  /// will work for each file in [langs] folder
   @override
   FutureOr<void> build(BuildStep buildStep) async {
     final assetId = buildStep.inputId;
