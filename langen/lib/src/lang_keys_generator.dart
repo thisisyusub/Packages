@@ -19,25 +19,14 @@ extension on String {
 class LangKeysGenerator implements Builder {
   @override
   Map<String, List<String>> get buildExtensions => {
-        '.json': ['lang_keys.dart'],
+        '.json': ['lang_keys.dart']
       };
-
-  /// used to store keys of language keys for documentation
-  /// will be used to control if the current file contains
-  /// current json key or not
-  final languageKeysWithJsonKeys = <String, HashSet<String>>{};
-
-  /// used to store values of keys for documentation
-  final languageKeysWithJsonValues = <String, Map<String, dynamic>>{};
-
-  /// stores [all keys] used in app
-  final valueKeys = HashSet<String>();
-
-  /// stores all languageCodes used in app
-  final languageCodes = HashSet<String>();
 
   /// to perform fast String concatenation
   final sb = StringBuffer();
+
+  /// stores all keys of json files
+  final List<String> _allKeys = <String>[];
 
   /// do some logic
   final output = 'lib/utils/constants/language_keys.dart';
@@ -48,7 +37,7 @@ class LangKeysGenerator implements Builder {
 
     if (assetId.pathSegments.contains('langs')) {
       /// gets [lang code] of current json file
-      final langCode = assetId.pathSegments.last.split('.').first;
+      // final langCode = assetId.pathSegments.last.split('.').first;
 
       /// reads current [*.json] file
       final file = await buildStep.readAsString(assetId);
@@ -56,45 +45,27 @@ class LangKeysGenerator implements Builder {
       /// converts json string to Map
       Map<String, dynamic> keysAndValues = json.decode(file);
 
-      /// adds [language key] to HashSet
-      languageCodes.add(langCode);
-
       /// collects all keys of current language
       final currentLangKeys = HashSet<String>();
 
-      final currentLangWithValues = <String, dynamic>{};
-
       /// collects all values of current langauge
       for (var keyAndValue in keysAndValues.entries) {
-        valueKeys.add(keyAndValue.key);
+        /// if already has this key it will omit
+        /// this key for current json file
+        if (_allKeys.contains(keyAndValue.key)) continue;
+
+        _allKeys.add(keyAndValue.key);
         currentLangKeys.add(keyAndValue.key);
-        currentLangWithValues.putIfAbsent(
-            keyAndValue.key, () => keyAndValue.value);
       }
 
-      languageKeysWithJsonKeys.putIfAbsent(langCode, () => currentLangKeys);
-      languageKeysWithJsonValues.putIfAbsent(
-          langCode, () => currentLangWithValues);
-
-      for (var i = 0; i < valueKeys.length; i++) {
-        final currentKey = valueKeys.elementAt(i);
-
-        for (var langCode in languageCodes) {
-          final isCurrentLangFileContainsCurentKey =
-              languageKeysWithJsonKeys[langCode].contains(currentKey);
-
-          final message = isCurrentLangFileContainsCurentKey
-              ? languageKeysWithJsonValues[langCode][currentKey]
-              : '[Null]';
-
-          sb.writeln(
-            '  /// ${isCurrentLangFileContainsCurentKey ? '' : '!'}'
-            ' ${langCode.toUpperCase()}: ${message.replaceAll('\n', ' ')}',
-          );
-        }
+      /// it will clear to write new data
+      /// from current json file
+      sb.clear();
+      for (var i = 0; i < currentLangKeys.length; i++) {
+        final currentKey = currentLangKeys.elementAt(i);
         sb.writeln(' const String ${currentKey.capitalize} = \'$currentKey\';');
 
-        if (i != valueKeys.length - 1) {
+        if (i != currentLangKeys.length - 1) {
           sb.writeln();
         }
       }
