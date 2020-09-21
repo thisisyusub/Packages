@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:convert' show json;
 
 import 'package:build/build.dart';
-import 'package:flutter/foundation.dart';
 
 class LangKeysGenerator implements Builder {
   @override
@@ -18,20 +18,27 @@ class LangKeysGenerator implements Builder {
   /// used to store values of keys for documentation
   final languageKeysWithJsonValues = <String, Map<String, dynamic>>{};
 
-  /// stores [all keys] used in app
-  final valueKeys = HashSet<String>();
-
   /// stores all languageCodes used in app
   final languageCodes = HashSet<String>();
 
   @override
-  FutureOr<void> build(BuildStep buildStep) {
+  FutureOr<void> build(BuildStep buildStep) async {
     final assetId = buildStep.inputId;
 
     if (assetId.pathSegments.contains('langs')) {
-      debugPrint(assetId.package);
-      debugPrint(assetId.path);
-      debugPrint('${assetId.pathSegments}');
+      /// gets [lang code] of current json file
+      final langCode = assetId.pathSegments.last.split('.').first;
+
+      /// reads current [*.json] file
+      final file = await buildStep.readAsString(assetId);
+
+      /// converts json string to Map
+      Map<String, dynamic> keyAndValues = json.decode(file);
+
+      /// adds [language key] to HashSet
+      languageCodes.add(langCode);
+
+      print(languageCodes);
     }
   }
 }
