@@ -48,7 +48,7 @@ class LangKeysGenerator implements Builder {
       /// collects all keys of current language
       final currentLangKeys = HashSet<String>();
 
-      /// collects all values of current langauge
+      /// collects all values of current language
       for (var keyAndValue in keysAndValues.entries) {
         /// if already has this key it will omit
         /// this key for current json file
@@ -61,15 +61,10 @@ class LangKeysGenerator implements Builder {
       for (var i = 0; i < currentLangKeys.length; i++) {
         final currentKey = currentLangKeys.elementAt(i);
         sb.writeln(' const String ${currentKey.capitalize} = \'$currentKey\';');
-
-        if (i != currentLangKeys.length - 1) {
-          sb.writeln();
-        }
+        sb.writeln();
       }
 
-      print('current value: ${sb.toString()}');
-
-      /// write all data to [langauge_keys.dart] file in [utils/constants] directory
+      /// write all data to [language_keys.dart] file in [utils/constants] directory
       var writingFile = File(output);
       var writer = writingFile.openWrite();
       writer.write(sb.toString());
