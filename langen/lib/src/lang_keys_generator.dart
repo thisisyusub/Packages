@@ -95,7 +95,7 @@ class LangKeysGenerator implements Builder {
         }
       }
 
-      final copyAssetId = assetId.changeExtension('.g.dart');
+      final copyAssetId = assetId.changeExtension('lang_keys.dart');
       await buildStep.writeAsString(copyAssetId, sb.toString());
     }
   }
