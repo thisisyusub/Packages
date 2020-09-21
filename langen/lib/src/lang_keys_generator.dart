@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert' show json;
+import 'dart:io';
 
 import 'package:build/build.dart';
 
@@ -34,6 +35,12 @@ class LangKeysGenerator implements Builder {
 
   /// stores all languageCodes used in app
   final languageCodes = HashSet<String>();
+
+  /// to perform fast String concatenation
+  final sb = StringBuffer();
+
+  /// do some logic
+  final output = 'lib/utils/constants/language_keys.dart';
 
   @override
   FutureOr<void> build(BuildStep buildStep) async {
@@ -69,9 +76,6 @@ class LangKeysGenerator implements Builder {
       languageKeysWithJsonValues.putIfAbsent(
           langCode, () => currentLangWithValues);
 
-      /// to perform fast String concatenation
-      final sb = StringBuffer();
-
       for (var i = 0; i < valueKeys.length; i++) {
         final currentKey = valueKeys.elementAt(i);
 
@@ -95,9 +99,11 @@ class LangKeysGenerator implements Builder {
         }
       }
 
-      //final copyAssetId = assetId.changeExtension('lang_keys.dart');
-      await buildStep.writeAsString(
-          AssetId(assetId.package, './utils/constants/'), sb.toString());
+      /// write all data to [langauge_keys.dart] file in [utils/constants] directory
+      var writingFile = File(output);
+      var writer = writingFile.openWrite();
+      writer.write(sb.toString());
+      await writer.close();
     }
   }
 }
