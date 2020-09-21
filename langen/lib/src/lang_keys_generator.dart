@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:build/build.dart';
+import 'package:flutter/foundation.dart';
 
 class LangKeysGenerator implements Builder {
   @override
@@ -28,9 +29,9 @@ class LangKeysGenerator implements Builder {
     final assetId = buildStep.inputId;
 
     if (assetId.pathSegments.contains('langs')) {
-      print(assetId.package);
-      print(assetId.path);
-      print(assetId.pathSegments);
+      debugPrint(assetId.package);
+      debugPrint(assetId.path);
+      debugPrint('${assetId.pathSegments}');
     }
   }
 }
