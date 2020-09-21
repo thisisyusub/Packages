@@ -1,0 +1,15 @@
+targets:
+  langen:langen:
+    builders:
+      langen|langen:
+        enabled: True  
+
+builders:
+  langen:
+    import: 'package:langen/langen.dart'
+    builder_factories: ['langen']
+    build_extensions:
+      .json:
+        - lang_keys.dart
+    build_to: source
+    auto_apply: root_package

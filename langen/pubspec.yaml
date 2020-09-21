@@ -1,0 +1,25 @@
+name: langen
+description: A new Flutter package project.
+version: 0.0.1
+author: Kanan Yusubov
+homepage: null
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.17.0 <2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  build: ^1.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_config: ^0.4.2
+  build_runner: ^1.9.0
+
+flutter: null
+
+
+
