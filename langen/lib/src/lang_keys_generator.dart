@@ -28,6 +28,9 @@ class LangKeysGenerator implements Builder {
   /// do some logic
   final output = 'lib/utils/constants/language_keys.dart';
 
+  /// to perform fast String concatenation
+  final sb = StringBuffer();
+
   @override
   FutureOr<void> build(BuildStep buildStep) async {
     final assetId = buildStep.inputId;
@@ -54,11 +57,6 @@ class LangKeysGenerator implements Builder {
         _allKeys.add(keyAndValue.key);
         currentLangKeys.add(keyAndValue.key);
       }
-
-      /// it will clear to write new data
-      /// from current json file
-      /// to perform fast String concatenation
-      final sb = StringBuffer();
 
       for (var i = 0; i < currentLangKeys.length; i++) {
         final currentKey = currentLangKeys.elementAt(i);
