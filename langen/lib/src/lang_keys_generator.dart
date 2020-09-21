@@ -22,9 +22,6 @@ class LangKeysGenerator implements Builder {
         '.json': ['lang_keys.dart']
       };
 
-  /// to perform fast String concatenation
-  final sb = StringBuffer();
-
   /// stores all keys of json files
   final List<String> _allKeys = <String>[];
 
@@ -60,7 +57,9 @@ class LangKeysGenerator implements Builder {
 
       /// it will clear to write new data
       /// from current json file
-      sb.clear();
+      /// to perform fast String concatenation
+      final sb = StringBuffer();
+
       for (var i = 0; i < currentLangKeys.length; i++) {
         final currentKey = currentLangKeys.elementAt(i);
         sb.writeln(' const String ${currentKey.capitalize} = \'$currentKey\';');
