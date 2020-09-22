@@ -4,6 +4,7 @@ import 'dart:convert' show json;
 import 'dart:io';
 
 import 'package:build/build.dart';
+import 'package:flutter/foundation.dart';
 
 /// simple extension for String
 /// to capitalize Strings like [CamelCase]
@@ -44,6 +45,8 @@ class LangKeysGenerator implements Builder {
     final assetId = buildStep.inputId;
 
     if (assetId.pathSegments.contains('langs')) {
+      debugPrint("current file path: ${assetId.path}");
+
       /// gets [lang code] of current json file
       // final langCode = assetId.pathSegments.last.split('.').first;
 
