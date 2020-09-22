@@ -13,7 +13,7 @@ First of all, make sure you have added the following dependencies:
 ```yaml
 dev_dependencies:
   build_runner: ^1.9.0
-  langen: ^0.0.3
+  langen: ^0.0.5
 ```
 
 > Run `flutter pub get` to get dependencies.
@@ -49,4 +49,22 @@ If you want to enable generation for next steps (when you add new keys and value
 
 `flutter pub run build_runner watch`
 
+They will generate `language_keys.dart` file like following:
+
+```dart
+ const String hi = 'hi';
+
+ const String bye = 'bye';
+
+ const String test = 'test';
+```
+
+Then you can use this keys in anywhere you want to call by `key` and translate it.
+
+## Dart Versions
+- Dart 2: ">= 2.7.0 <3.0.0"
+
+## Maintainers
+
+- [Kanan Yusubov](https://github.com/yusubx)
 
