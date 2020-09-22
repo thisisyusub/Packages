@@ -1,6 +1,6 @@
 name: langen
 description: A simple package to generate language json keys to dart Strings
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/yusubx/Packages
 
 environment:
